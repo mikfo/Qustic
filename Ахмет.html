@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Викторина: Угадай кто на фото</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 30px;
+        }
+        img {
+            max-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #999;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Викторина: Угадай кто изображён на фото</h1>
+    <img id="quizImage" src="" alt="Фото для викторины">
+
+    <div class="options">
+        <button onclick="checkAnswer('Михаил Иванович Глинка')">Михаил Иванович Глинка</button>
+        <button onclick="checkAnswer('Ахмет Кубанович Жубанов')">Ахмет Кубанович Жубанов</button>
+        <button onclick="checkAnswer('Франц Йозеф Гайдн')">Франц Йозеф Гайдн</button>
+        <button onclick="checkAnswer('Владимир Яковлевич Шаинский')">Владимир Яковлевич Шаинский</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            {
+                image: "https://lastfm.freetls.fastly.net/i/u/avatar170s/cf76df5eb0fd4bdbb969801e99fe246c", 
+                correct: "Михаил Иванович Глинка"
+            },
+            {
+                image: "https://yt3.ggpht.com/53MPR05rKPx2-cJMN_WhyDA52xHrq4fh57H1gFAlM6CdXz8SFziEzac4lj09c2J5OUpX2LrHkuhOpQ=s640-c-fcrop64=1,00000000ffffffff-nd-v1", 
+                correct: "Ахмет Кубанович Жубанов"
+            },
+            {
+                image: " https://i.pinimg.com/736x/4e/67/44/4e67446efaea641db40763f6b62d374d.jpg", 
+                correct: "Франц Йозеф Гайдн"
+            },
+            {
+                image: "https://i.ytimg.com/vi/bN0GOJx9d5A/maxresdefault.jpg", 
+                correct: "Владимир Яковлевич Шаинский"
+            }
+        ];
+
+        let currentQuestion = 0;
+        const quizImage = document.getElementById("quizImage");
+        const result = document.getElementById("result");
+
+        loadQuestion();
+
+        function loadQuestion() {
+            result.textContent = "";
+            quizImage.src = questions[currentQuestion].image;
+        }
+
+        function checkAnswer(answer) {
+            if (answer === questions[currentQuestion].correct) {
+                result.textContent = "✅ Правильно!";
+                result.style.color = "green";
+            } else {
+                result.textContent = "❌ Неправильно!";
+                result.style.color = "red";
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    quizImage.style.display = "none";
+                    result.textContent = "🎉 Викторина окончена!";
+                    result.style.color = "blue";
+                }
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
